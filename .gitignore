@@ -1,0 +1,4 @@
+build/
+libs/
+debug.keystore
+.DS_Store

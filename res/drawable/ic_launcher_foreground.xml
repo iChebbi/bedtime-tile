@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Adaptive icon foreground: 108dp canvas, artwork kept inside the central 66dp safe zone. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- Crescent: the 24dp tile moon scaled 2.4x and centred. -->
+    <group
+        android:scaleX="2.4"
+        android:scaleY="2.4"
+        android:translateX="25.2"
+        android:translateY="25.2">
+        <path
+            android:fillColor="#FFE9B0"
+            android:pathData="M12,3a9,9 0 1,0 9,9c0,-0.46 -0.04,-0.92 -0.1,-1.36a5.4,5.4 0 0,1 -7.54,-7.54C12.92,3.04 12.46,3 12,3z" />
+    </group>
+    <!-- Four-point star sitting in the crescent's opening. -->
+    <path
+        android:fillColor="#FFE9B0"
+        android:pathData="M67,34l1.9,5.1l5.1,1.9l-5.1,1.9l-1.9,5.1l-1.9,-5.1l-5.1,-1.9l5.1,-1.9z" />
+</vector>
