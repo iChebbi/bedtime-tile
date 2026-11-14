@@ -64,4 +64,5 @@ An APK signed with a different key than the installed one only installs after un
 
 ## Licence
 
-MIT, see [LICENSE](LICENSE). Release APKs bundle the Shizuku client library, also MIT.
+MIT, see [LICENSE](LICENSE). Release APKs bundle the Shizuku client library, also MIT; its notice is in
+[THIRD_PARTY_NOTICES](THIRD_PARTY_NOTICES).
