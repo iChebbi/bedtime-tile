@@ -1,66 +1,66 @@
+<div align="center">
+
+<img src="assets/icon.svg" width="140" alt="Bedtime tile icon">
+
 # Bedtime tile
 
-A quick settings tile that switches Digital Wellbeing's **Bedtime mode** on and off with one tap, for
-Android skins that ship no tile for it (ColorOS 17 has only the Do Not Disturb tile).
+One tap in quick settings to switch Bedtime mode on or off.<br>
+For phones that ship no Bedtime tile.
 
-- Tap: toggles the real Bedtime mode, with your existing Bedtime settings.
-- Long-press: opens the Bedtime mode screen in Digital Wellbeing.
+[Install](#install) · [What it does](#what-it-does) · [Good to know](#good-to-know) · [Build from source](#build-from-source)
 
-## How it works
+[![release](https://img.shields.io/github/v/release/iChebbi/bedtime-tile)](https://github.com/iChebbi/bedtime-tile/releases/latest)
+[![downloads](https://img.shields.io/github/downloads/iChebbi/bedtime-tile/total)](https://github.com/iChebbi/bedtime-tile/releases)
+![Android](https://img.shields.io/badge/Android-15%2B-3DDC84?logo=android&logoColor=white)
+![tested on](https://img.shields.io/badge/tested%20on-OPPO%20ColorOS%2017-2B3175)
+[![license](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 
-Bedtime mode is a "mode" owned by Digital Wellbeing, and Android only lets the owning app or the system
-switch it. The adb shell user holds `MANAGE_NOTIFICATIONS`, which is enough. So the tile asks
-[Shizuku](https://shizuku.rikka.app/) to run a small Java program as the shell user:
+</div>
 
-- [`Toggle.java`](src/dev/local/bedtimetile/Toggle.java) runs under `app_process`, finds the mode of type
-  `TYPE_BEDTIME` and calls `INotificationManager.setAutomaticZenRuleState` on it.
-- [`BedtimeTileService.java`](src/dev/local/bedtimetile/BedtimeTileService.java) is the tile. It flips at once
-  and runs `Toggle` through Shizuku; the mode follows about half a second later.
-- [`BedtimeSettingsActivity.java`](src/dev/local/bedtimetile/BedtimeSettingsActivity.java) handles the long-press.
+## What it does
 
-## Requirements
+- **Tap** the tile to switch Digital Wellbeing's Bedtime mode on or off, with the Bedtime settings you already have.
+- **Long-press** the tile to open the Bedtime mode settings.
 
-- Android 15 or newer with Digital Wellbeing's Bedtime mode set up.
-- Shizuku installed and running. Shizuku has to be started again after every reboot.
-- ColorOS (OPPO, OnePlus): Shizuku reports "The permission of adb is limited" until the adb restriction is
-  lifted in Developer options. Shizuku's guide calls the option "Permission monitoring"; on ColorOS 17 it was
-  "Disable system optimisation". Restart Shizuku afterwards.
+> [!NOTE]
+> Tested only on an OPPO phone (Find X9) running ColorOS 17, which is Android 17. Other phones and other
+> Android versions are untested.
 
 ## Install
 
-1. Install [Shizuku](https://play.google.com/store/apps/details?id=moe.shizuku.privileged.api) and start it;
-   the Shizuku app walks you through starting it over wireless debugging. On ColorOS, lift the adb
-   restriction first (see Requirements).
-2. Download the APK from the [latest release](https://github.com/iChebbi/bedtime-tile/releases/latest) on
-   the phone and open it. Android asks you to allow installs from your browser or file manager, and Play
-   Protect may warn about an unknown developer.
+1. Install [Shizuku](https://play.google.com/store/apps/details?id=moe.shizuku.privileged.api) and start it.
+   The Shizuku app walks you through it.
+2. On the phone, download the APK from the [latest release](https://github.com/iChebbi/bedtime-tile/releases/latest)
+   and open it. Android asks you to allow the install, and Play Protect may warn about an unknown developer.
 3. Open the quick settings editor and drag in the "Bedtime mode" tile.
 4. Tap the tile once and choose "Allow all the time" in the Shizuku dialog. Close the quick settings panel
    if the dialog hides behind it.
 
-From then on a tap switches Bedtime mode and a long-press opens its settings. The app has no launcher icon;
-it lives in quick settings only.
+## Good to know
 
-To remove it, uninstall "Bedtime tile" from Settings → Apps.
+- **Shizuku has to be running.** It stops whenever the phone restarts; the tile then shows "Start Shizuku"
+  until you start it again in the Shizuku app.
+- **ColorOS needs one extra switch.** If Shizuku says "The permission of adb is limited", turn on
+  "Disable system optimisation" in Developer options and restart Shizuku.
+- **The mode follows the tap by about half a second.** The tile itself flips at once.
+- **There is no app icon on the home screen.** The app lives in quick settings only. To remove it, uninstall
+  "Bedtime tile" from Settings → Apps.
+- **A future Android update can break it**, because Android offers apps no official way to switch Bedtime mode.
+
+## How it works
+
+Android only lets the system or Digital Wellbeing switch Bedtime mode. Shizuku lends the tile the rights of
+adb, and with those the tile asks Android to switch the mode. The code is three small files in
+[`src`](src/dev/local/bedtimetile).
 
 ## Build from source
 
-Needs the Android SDK (platform and build-tools 37), a JDK and `adb`. No Gradle.
+Needs the Android SDK (platform and build-tools 37), a JDK and `adb`.
 
 ```sh
 ./build.sh           # builds build/bedtime-tile.apk
 ./build.sh install   # builds and installs over adb
 ```
-
-The first build downloads the Shizuku client library from Maven Central and creates a local debug keystore.
-Set `KEYSTORE=/path/to/your.keystore` to sign with a key kept elsewhere (alias `debug`, password `android`).
-An APK signed with a different key than the installed one only installs after uninstalling the old app.
-
-## Limits
-
-- Stops working when Shizuku stops; the tile then shows "Start Shizuku".
-- Uses hidden platform interfaces, so a future Android version can break it.
-- Tested on an OPPO Find X9 with ColorOS 17 (Android 17) only.
 
 ## Licence
 
