@@ -20,8 +20,9 @@ javac --release 17 -cp "$JAR:libs/*" -d build/classes $(find src -name '*.java')
 "$BT/d8" --min-api 35 --lib "$JAR" --output build/dex $(find build/classes -name '*.class') libs/*.jar
 (cd build/dex && zip -q ../unsigned.apk classes.dex)
 "$BT/zipalign" -f 4 build/unsigned.apk build/aligned.apk
-[ -f debug.keystore ] || keytool -genkeypair -keystore debug.keystore -storepass android -keypass android \
+KS="${KEYSTORE:-debug.keystore}"
+[ -f "$KS" ] || keytool -genkeypair -keystore "$KS" -storepass android -keypass android \
     -alias debug -keyalg RSA -validity 10000 -dname CN=debug
-"$BT/apksigner" sign --ks debug.keystore --ks-pass pass:android --out build/bedtime-tile.apk build/aligned.apk
+"$BT/apksigner" sign --ks "$KS" --ks-pass pass:android --out build/bedtime-tile.apk build/aligned.apk
 echo "built build/bedtime-tile.apk"
 if [ "$1" = install ]; then adb install -r build/bedtime-tile.apk; fi

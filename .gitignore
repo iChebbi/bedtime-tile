@@ -1,4 +1,4 @@
 build/
 libs/
-debug.keystore
+*.keystore
 .DS_Store
