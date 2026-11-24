@@ -23,8 +23,8 @@ For phones that ship no Bedtime tile.
 - **Long-press** the tile to open the Bedtime mode settings.
 
 > [!NOTE]
-> Tested only on an OPPO phone (Find X9) running ColorOS 17, which is Android 17. Other phones and other
-> Android versions are untested.
+> Tested only on two OPPO phones (Find X9 and Find X10) running ColorOS 17, which is Android 17. Other phones
+> and other Android versions are untested.
 
 ## Install
 
